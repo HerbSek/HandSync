@@ -20,19 +20,18 @@ while True:
     grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
 
-    load_cascade = cascade_face.detectMultiScale(grey, 1.2, 3) 
+    load_cascade = cascade_face.detectMultiScale(grey, 1.4, 5) 
     for (w,h,i,j) in load_cascade:
         cv2.rectangle(frame, (w,h), (w+i,h+j), (255,0,0), 2) 
         center_x = w + i // 2
         center_y = h + j // 2
         
-        pyautogui.moveTo(center_x,center_y, 0.1)
+        pyautogui.moveTo(center_x,center_y) 
         
-        cv2.circle(frame, (center_x, center_y), 5, (0, 255, 0), -1)
         print(f"Center coordinates: ({center_x}, {center_y})")
 
-    cv2.imshow('frame', frame)
-    c = cv2.waitKey(11)
+    # cv2.imshow('frame', frame)
+    c = cv2.waitKey(10)
     if c == ord(' '):
         break
 cam.release()
