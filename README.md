@@ -12,7 +12,7 @@ Features
 Intructions 
 1. Clone repository
 2. In the terminal, navigate to the folder of this project and use this command:
-   " pip install -r requirements.txt " , This will install the packages use in the program
+   " pip install -r requirements.txt " , This will install the packages used in the program
 3. Now in the same terminal, run the program using " python vision_mouse.py "
 
 # Demo 
