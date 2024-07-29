@@ -1,0 +1,214 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Tracking with PyScript</title>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <style>
+        #handTrackingContainer {
+            width: 100%;
+            height: 100%;
+        }
+        #handTrackingContainer canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <button id="toggleButton">Start Hand Tracking</button>
+    <div id="handTrackingContainer">
+        <py-script>
+            from pyscript import Element
+            import cv2
+            import numpy as np
+            import pyautogui
+            import mediapipe as mp
+            import asyncio
+
+            # Define the variables
+            mp_drawing = mp.solutions.drawing_utils
+            mp_hands = mp.solutions.hands
+            screen_width, screen_height = pyautogui.size()
+            running = False
+
+            # Function to handle button click
+            def toggle_tracking(event):
+                global running
+                running = not running
+                button_text = "Start Hand Tracking" if not running else "Stop Hand Tracking"
+                Element('toggleButton').element.innerHTML = button_text
+                if running:
+                    start_hand_tracking()
+                else:
+                    stop_hand_tracking()
+
+            Element('toggleButton').element.onclick = toggle_tracking
+
+            # Initialize Video Capture and Hand Tracking
+            cap = cv2.VideoCapture(0)
+            hands = mp_hands.Hands(
+                model_complexity=0,  
+                min_detection_confidence=0.8,
+                min_tracking_confidence=0.8
+            )
+            window_width, window_height = Element('handTrackingContainer').element.clientWidth, Element('handTrackingContainer').element.clientHeight
+
+            def landmarks_close(lm1, lm2, threshold=0.07):
+                return abs(lm1.x - lm2.x) < threshold and abs(lm1.y - lm2.y) < threshold and abs(lm1.z - lm2.z) < threshold
+
+            async def start_hand_tracking():
+                global running
+                while running:
+                    success, image = cap.read()
+                    if not success:
+                        continue
+
+                    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                    image = cv2.flip(image, 1)
+                    height, width, _ = image.shape
+                    image = cv2.resize(image, (window_width, window_height))
+                    
+                    results = hands.process(image)
+                    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+                    if results.multi_hand_landmarks:
+                        for hand_landmarks in results.multi_hand_landmarks:
+                            mp_drawing.draw_landmarks(
+                                image,
+                                hand_landmarks,
+                                mp_hands.HAND_CONNECTIONS,
+                                mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=2, circle_radius=2),
+                                mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=2, circle_radius=2)
+                            )
+                            
+                            for id, landmark in enumerate(hand_landmarks.landmark):
+                                cx, cy = int(landmark.x * width), int(landmark.y * height)
+
+                                if not landmarks_close(hand_landmarks.landmark[4], hand_landmarks.landmark[8]):
+                                    if id == 8:
+                                        pyautogui.moveTo(cx, cy)
+                                elif landmarks_close(hand_landmarks.landmark[4], hand_landmarks.landmark[8]) and id == 8:
+                                    pyautogui.dragTo(cx, cy)
+
+                    # Convert image to base64
+                    _, buffer = cv2.imencode('.png', image)
+                    img_base64 = np.array(buffer).tobytes().hex()
+                    Element('handTrackingContainer').element.innerHTML = f'<img src="data:image/png;base64,{img_base64}"/>'
+
+                    await asyncio.sleep(0.1)
+
+            def stop_hand_tracking():
+                global running
+                running = False
+
+        </py-script>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Tracking with PyScript</title>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <style>
+        #video-container {
+            width: 100%;
+            height: 100%;
+        }
+        #video-container canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <button id="toggleButton">Start Hand Tracking</button>
+    <div id="video-container">
+         <py-script>
+            from pyscript import Element
+            import asyncio
+            import cv2
+            import numpy as np
+            import mediapipe as mp
+            import base64
+
+            mp_drawing = mp.solutions.drawing_utils
+            mp_hands = mp.solutions.hands
+            screen_width, screen_height = Element('video-container').element.clientWidth, Element('video-container').element.clientHeight
+            running = False
+
+            def landmarks_close(lm1, lm2, threshold=0.07):
+                return abs(lm1.x - lm2.x) < threshold and abs(lm1.y - lm2.y) < threshold and abs(lm1.z - lm2.z) < threshold
+
+            async def start_hand_tracking():
+                global running
+                cap = cv2.VideoCapture(0)
+                hands = mp_hands.Hands(
+                    model_complexity=0,  
+                    min_detection_confidence=0.8,
+                    min_tracking_confidence=0.8
+                )
+                while running:
+                    success, image = cap.read()
+                    if not success:
+                        continue
+
+                    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                    image = cv2.flip(image, 1)
+                    height, width, _ = image.shape
+                    image = cv2.resize(image, (screen_width, screen_height))
+                    
+                    results = hands.process(image)
+                    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+                    if results.multi_hand_landmarks:
+                        for hand_landmarks in results.multi_hand_landmarks:
+                            mp_drawing.draw_landmarks(
+                                image,
+                                hand_landmarks,
+                                mp_hands.HAND_CONNECTIONS,
+                                mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=2, circle_radius=2),
+                                mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=2, circle_radius=2)
+                            )
+                            
+                            for id, landmark in enumerate(hand_landmarks.landmark):
+                                cx, cy = int(landmark.x * width), int(landmark.y * height)
+
+                                if not landmarks_close(hand_landmarks.landmark[4], hand_landmarks.landmark[8]):
+                                    if id == 8:
+                                        # Example action
+                                        print(f"Moving mouse to: ({cx}, {cy})")
+                                elif landmarks_close(hand_landmarks.landmark[4], hand_landmarks.landmark[8]) and id == 8:
+                                    # Example action
+                                    print(f"Dragging to: ({cx}, {cy})")
+
+                    # Convert image to base64
+                    _, buffer = cv2.imencode('.png', image)
+                    img_base64 = base64.b64encode(buffer).decode('utf-8')
+                    Element('video-container').element.innerHTML = f'<img src="data:image/png;base64,{img_base64}"/>'
+
+                    await asyncio.sleep(0.1)
+
+                cap.release()
+
+            def toggle_tracking(event):
+                global running
+                running = not running
+                button_text = "Start Hand Tracking" if not running else "Stop Hand Tracking"
+                Element('toggleButton').element.innerHTML = button_text
+                if running:
+                    asyncio.ensure_future(start_hand_tracking())
+
+            Element('toggleButton').element.onclick = toggle_tracking
+        </py-script> 
+   
+    </div>
+</body>
+</html>
