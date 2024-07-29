@@ -15,7 +15,7 @@ screen_width, screen_height = pyautogui.size()
 
 cap = cv2.VideoCapture(0)
 with mp_hands.Hands(
-        model_complexity=1,  
+        model_complexity=0,  
         min_detection_confidence=0.9,
         min_tracking_confidence=0.9) as hands:
        
