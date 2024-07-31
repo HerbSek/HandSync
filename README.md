@@ -19,8 +19,6 @@ Intructions
 
 https://github.com/panda0942/VisionMouse/assets/69324217/201ef526-2fb0-4301-8698-ffc28fe5fdd3
 
-## After ajusting parameters on smoothening and sensitivity 
-
-https://github.com/user-attachments/assets/8c4a85fe-a238-4f85-9206-23fad8bcd6ac
-
+## Linkedln : 
+https://www.linkedin.com/posts/herbert-sekpey-39340a1aa_computervision-mediapipe-opencv-activity-7223780425687552000-L4oA?utm_source=share&utm_medium=member_android
 
