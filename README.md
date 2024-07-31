@@ -19,3 +19,8 @@ Intructions
 
 https://github.com/panda0942/VisionMouse/assets/69324217/201ef526-2fb0-4301-8698-ffc28fe5fdd3
 
+## After ajusting parameters on smoothening and sensitivity 
+
+https://github.com/user-attachments/assets/8c4a85fe-a238-4f85-9206-23fad8bcd6ac
+
+
