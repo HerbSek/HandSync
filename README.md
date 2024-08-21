@@ -1,4 +1,4 @@
-# Vision Mouse 
+# Hand Sync
 
 This project utilizes OpenCV, MediaPipe, and PyAutoGUI to track hand movements and control the mouse cursor based on hand gestures. The system captures live video from the webcam, processes the hand landmarks, and moves or drags the mouse based on specific hand gestures.
 
