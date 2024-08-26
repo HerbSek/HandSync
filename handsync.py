@@ -3,7 +3,7 @@ import mediapipe as mp
 import pyautogui
 import time
 
-def landmarks_close(lm1, lm2, threshold=0.08):
+def landmarks_close(lm1, lm2, threshold=0.09):
     return abs(lm1.x - lm2.x) < threshold and abs(lm1.y - lm2.y) < threshold and abs(lm1.z - lm2.z) < threshold
 
 pyautogui.FAILSAFE = False
