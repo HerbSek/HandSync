@@ -6,6 +6,9 @@ import streamlit as st
 from streamlit_webrtc import VideoProcessorBase, webrtc_streamer
 import av
 
+# st.set_page_config( layout = 'wide')
+
+
 with open('track.css') as css:
     st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html = True)
     
