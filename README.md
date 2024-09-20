@@ -15,9 +15,11 @@ Intructions
    " pip install -r requirements.txt " , This will install the packages used in the program
 3. Now in the same terminal, run the program using " handsync.py "
 
-# Demo 
-
+# Demo 1
 https://github.com/panda0942/VisionMouse/assets/69324217/201ef526-2fb0-4301-8698-ffc28fe5fdd3
+# Demo 2
+https://github.com/user-attachments/assets/3ca99b40-3a16-41d0-a826-a50510d92247
+
 
 ## Linkedln : 
 https://www.linkedin.com/posts/herbert-sekpey-39340a1aa_computervision-mediapipe-opencv-activity-7223780425687552000-L4oA?utm_source=share&utm_medium=member_android
